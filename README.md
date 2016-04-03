@@ -1,0 +1,1 @@
+# vraptor-cdi-hibernate-
