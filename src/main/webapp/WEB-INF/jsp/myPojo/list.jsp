@@ -7,22 +7,26 @@
     <title>List Pojos</title>
 </head>
 <body>
-<h1>Pojos</h1>
-<table border="1">
-    <jsp:useBean id="list" scope="request" type="java.util.List<com.github.hiagoboliveira.entity.MyPojo>"/>
-    <c:forEach items="${list}" var="item">
-        <tr style=>
-            <td>${item.id}</td>
-            <td>${item.nome}</td>
-            <td>${item.descricao}</td>
-        </tr>
-    </c:forEach>
-</table>
+<jsp:useBean id="list" scope="request" type="java.util.List<com.github.hiagoboliveira.entity.MyPojo>"/>
+<c:if test="${!list.isEmpty()}">
+    <h1>Entidades:</h1>
+    <table border="1" id="pojosTable">
+        <c:forEach items="${list}" var="item">
+            <tr style=>
+                <td>${item.id}</td>
+                <td>${item.nome}</td>
+                <td>${item.descricao}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+<div id="result"></div>
 <br>
 <fieldset>
+    <legend>Adicionar uma nova entidade</legend>
     <form action="${linkTo[MyPojoController].add}" method="post" id="addForm">
         <span>Nome: </span>
-        <input type="input" name="myPojo.nome"  />
+        <input type="input" name="myPojo.nome"/>
         <br><br>
         <span>Desc: </span>
         <input type="input" name="myPojo.descricao"/>
@@ -44,7 +48,12 @@
 
         // Show result
         posting.done(function (data) {
-            alert(data)
+            var myJson = JSON.parse(data)
+            $('#pojosTable tr:last').after("<tr><td>" + myJson.id + "</td><td>" + myJson.nome + "</td><td>" + myJson.descricao + "</td></tr>")
+        });
+
+        posting.fail(function (data) {
+            alert("Erro ao adicionar entidade! ")
         });
     });
 </script>
