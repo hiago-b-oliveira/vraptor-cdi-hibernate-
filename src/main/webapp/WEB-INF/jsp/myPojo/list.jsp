@@ -7,6 +7,7 @@
     <title>List Pojos</title>
 </head>
 <body>
+<h2>#${id}</h2>
 <jsp:useBean id="list" scope="request" type="java.util.List<com.github.hiagoboliveira.entity.MyPojo>"/>
 <c:if test="${!list.isEmpty()}">
     <h1>Entidades:</h1>

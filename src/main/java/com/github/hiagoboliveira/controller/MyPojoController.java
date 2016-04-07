@@ -2,13 +2,14 @@ package com.github.hiagoboliveira.controller;
 
 import br.com.caelum.vraptor.*;
 import br.com.caelum.vraptor.view.Results;
+import com.github.hiagoboliveira.beans.NumberGeneratorBean;
+import com.github.hiagoboliveira.beans.RemoteNumberGenerator;
 import com.github.hiagoboliveira.entity.MyPojo;
 import com.github.hiagoboliveira.repository.GenericDAO;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
-import java.io.IOException;
-import java.util.Arrays;
 
 @Controller
 @Path("mypojo")
@@ -17,10 +18,13 @@ public class MyPojoController {
     private Result result;
     @Inject
     private GenericDAO genericRepository;
+    @EJB
+    private RemoteNumberGenerator remoteNumberGenerator;
 
     @Get
     @Path("/list")
     public void list() {
+        result.include("id", remoteNumberGenerator.generateNumber());
         result.include("list", genericRepository.listAll(MyPojo.class));
     }
 

@@ -1,6 +1,7 @@
 package com.github.hiagoboliveira.repository;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestScoped
 public class GenericDAO {
 
-    @PersistenceContext(name = "PU")
+    @Inject
     private EntityManager em;
 
     public <T> List<T> listAll(Class<T> entityClass) {
