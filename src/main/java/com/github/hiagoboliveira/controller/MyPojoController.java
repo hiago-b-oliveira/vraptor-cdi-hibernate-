@@ -2,11 +2,9 @@ package com.github.hiagoboliveira.controller;
 
 import br.com.caelum.vraptor.*;
 import br.com.caelum.vraptor.view.Results;
-import com.github.hiagoboliveira.beans.NumberGeneratorBean;
 import com.github.hiagoboliveira.beans.RemoteNumberGenerator;
 import com.github.hiagoboliveira.entity.MyPojo;
 import com.github.hiagoboliveira.repository.GenericDAO;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -31,19 +29,11 @@ public class MyPojoController {
     @Post
     @Path("/add")
     public void add(MyPojo myPojo) {
-
-        ObjectMapper mapper = new ObjectMapper();
-
         genericRepository.add(myPojo);
-        try {
-            result.use(Results.json())
-                    .withoutRoot()
-                    .from(mapper.writeValueAsString(myPojo))
-                    .serialize();
-
-        } catch (Exception e) {
-            result.use(Results.http()).sendError(500);
-        }
+        result.use(Results.json())
+                .withoutRoot()
+                .from(myPojo)
+                .serialize();
     }
 
 

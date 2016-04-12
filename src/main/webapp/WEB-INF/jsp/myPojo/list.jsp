@@ -58,16 +58,16 @@
         <div class="form-group">
             <label class="control-label col-sm-1">Nome:</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="myPojo.nome">
+                <input required="required" type="text" class="form-control" name="myPojo.nome">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-1">Descrição:</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="myPojo.descricao">
+                <input required="required" type="text" class="form-control" name="myPojo.descricao">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary col-sm-5">Add</button>
+        <button id="btn-submit" type="submit" class="btn btn-primary col-sm-5">Add</button>
     </form>
 </div>
 
@@ -84,7 +84,7 @@
                 <p>Entidade adicionada com sucesso</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                <button id="btn-modal-ok" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
@@ -105,7 +105,10 @@
             $("#section-1").show();
             $("#sucessModal").modal('show');
 
-            var myJson = JSON.parse(data)
+            $("[name='myPojo.nome']").val("");
+            $("[name='myPojo.descricao']").val("")
+
+            var myJson = data;
             $('#pojosTable tr:last').after("<tr><td>" + myJson.id + "</td><td>" + myJson.nome + "</td><td>" + myJson.descricao + "</td></tr>")
         });
 
